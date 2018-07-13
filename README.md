@@ -15,6 +15,6 @@ Calculate a "check digit" for a numeric string.
 ```elm
 import Mod10
 
-Mod10.calculateCheckDigit "7992739871" == Just '3'
-Mod10.calculateCheckDigit "nonsense" == Nothing
+Mod10.calculate "7992739871" == Just '3'
+Mod10.calculate "nonsense" == Nothing
 ```

@@ -1,4 +1,4 @@
-module Mod10 exposing (calculateCheckDigit, verifyCheckDigit)
+module Mod10 exposing (calculate, verify)
 
 {-| This library helps you create and verify numeric strings according to the Modulus10 algorithm.
 
@@ -10,24 +10,24 @@ module Mod10 exposing (calculateCheckDigit, verifyCheckDigit)
 
 # Verify
 
-@docs verifyCheckDigit
+@docs verify
 
 
 # Create
 
-@docs calculateCheckDigit
+@docs calculate
 
 -}
 
 
 {-| Calculate the "check digit" for a numeric string.
 
-    calculateCheckDigit "7992739871" == Just '3'
-    calculateCheckDigit "nonsense" == Nothing
+    calculate "7992739871" == Just '3'
+    calculate "nonsense" == Nothing
 
 -}
-calculateCheckDigit : String -> Maybe Char
-calculateCheckDigit str =
+calculate : String -> Maybe Char
+calculate str =
     String.split "" str
         |> List.map String.toInt
         |> List.foldl (Maybe.map2 (::)) (Just [])
@@ -45,14 +45,14 @@ calculateHelp ints =
 
 {-| Verfify a numeric string with the Modulus 10 algorithm.
 
-    verifyCheckDigit "79927398713" == True
-    verifyCheckDigit "79927398712" == False
-    verifyCheckDigit "nonsense" == False
+    verify "79927398713" == True
+    verify "79927398712" == False
+    verify "nonsense" == False
 
 -}
-verifyCheckDigit : String -> Bool
-verifyCheckDigit str =
-    calculateCheckDigit (String.dropRight 1 str)
+verify : String -> Bool
+verify str =
+    calculate (String.dropRight 1 str)
         == List.head (String.toList (String.right 1 str))
 
 
