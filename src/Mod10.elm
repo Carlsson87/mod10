@@ -8,7 +8,7 @@ module Mod10 exposing (calculate, verify)
 @docs verify
 
 
-# Create
+# Calculate
 
 @docs calculate
 
