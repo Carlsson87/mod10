@@ -31,12 +31,16 @@ calculateCheckDigit str =
     String.split "" str
         |> List.map String.toInt
         |> List.foldl (Maybe.map2 (::)) (Just [])
-        |> Maybe.map ((::) 0)
-        |> Maybe.map (List.indexedMap applyWeight)
-        |> Maybe.map List.sum
-        |> Maybe.map (modBy 10)
-        |> Maybe.map ((-) 10)
-        |> Maybe.andThen toChar
+        |> Maybe.andThen calculateHelp
+
+
+calculateHelp : List Int -> Maybe Char
+calculateHelp ints =
+    List.indexedMap applyWeight (0 :: ints)
+        |> List.sum
+        |> (*) 9
+        |> modBy 10
+        |> toChar
 
 
 {-| Verfify a numeric string with the Modulus 10 algorithm.
@@ -48,10 +52,8 @@ calculateCheckDigit str =
 -}
 verifyCheckDigit : String -> Bool
 verifyCheckDigit str =
-    Maybe.map2 (==)
-        (calculateCheckDigit (String.dropRight 1 str))
-        (String.right 1 str |> String.toList |> List.head)
-        |> Maybe.withDefault False
+    calculateCheckDigit (String.dropRight 1 str)
+        == List.head (String.toList (String.right 1 str))
 
 
 toChar : Int -> Maybe Char
