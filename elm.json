@@ -1,9 +1,9 @@
 {
     "type": "package",
     "name": "carlsson87/mod10",
-    "summary": "Verify and calculate check digits according to the algorithm \"Modulus 10\"",
+    "summary": "Verify and calculate check digits according to the algorithm Modulus 10",
     "license": "BSD-3-Clause",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "exposed-modules": [
         "Mod10"
     ],
