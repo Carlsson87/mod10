@@ -3,11 +3,6 @@ module Mod10 exposing (calculate, verify)
 {-| This library helps you create and verify numeric strings according to the Modulus10 algorithm.
 
 
-# Definition
-
-@docs Mod10
-
-
 # Verify
 
 @docs verify
