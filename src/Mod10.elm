@@ -24,7 +24,7 @@ module Mod10 exposing (calculate, verify)
 calculate : String -> Maybe Char
 calculate str =
     String.split "" str
-        |> List.map String.toInt
+        |> List.map (String.toInt >> Result.toMaybe)
         |> List.foldl (Maybe.map2 (::)) (Just [])
         |> Maybe.andThen calculateHelp
 
@@ -49,15 +49,15 @@ calculateHelp ints =
     List.indexedMap applyWeight (0 :: ints)
         |> List.sum
         |> (*) 9
-        |> modBy 10
-        |> String.fromInt
+        |> (\n -> n % 10)
+        |> toString
         |> String.uncons
         |> Maybe.map Tuple.first
 
 
 applyWeight : Int -> Int -> Int
 applyWeight index int =
-    if modBy 2 index == 0 then
+    if index % 2 == 0 then
         int
     else if int > 4 then
         (int * 2) - 9
