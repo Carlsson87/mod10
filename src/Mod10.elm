@@ -1,6 +1,6 @@
 module Mod10 exposing (calculate, verify)
 
-{-| This library helps you create and verify numeric strings according to the Modulus10 algorithm.
+{-| This library helps you create and verify numeric strings according to the Modulus 10 algorithm.
 
 
 # Verify
@@ -29,15 +29,6 @@ calculate str =
         |> Maybe.andThen calculateHelp
 
 
-calculateHelp : List Int -> Maybe Char
-calculateHelp ints =
-    List.indexedMap applyWeight (0 :: ints)
-        |> List.sum
-        |> (*) 9
-        |> modBy 10
-        |> toChar
-
-
 {-| Verfify a numeric string with the Modulus 10 algorithm.
 
     verify "79927398713" == True
@@ -47,45 +38,21 @@ calculateHelp ints =
 -}
 verify : String -> Bool
 verify str =
-    calculate (String.dropRight 1 str)
-        == List.head (String.toList (String.right 1 str))
+    Maybe.map2 (==)
+        (calculate (String.dropRight 1 str))
+        (List.head (String.toList (String.right 1 str)))
+        |> Maybe.withDefault False
 
 
-toChar : Int -> Maybe Char
-toChar int =
-    case int of
-        0 ->
-            Just '0'
-
-        1 ->
-            Just '1'
-
-        2 ->
-            Just '2'
-
-        3 ->
-            Just '3'
-
-        4 ->
-            Just '4'
-
-        5 ->
-            Just '5'
-
-        6 ->
-            Just '6'
-
-        7 ->
-            Just '7'
-
-        8 ->
-            Just '8'
-
-        9 ->
-            Just '9'
-
-        _ ->
-            Nothing
+calculateHelp : List Int -> Maybe Char
+calculateHelp ints =
+    List.indexedMap applyWeight (0 :: ints)
+        |> List.sum
+        |> (*) 9
+        |> modBy 10
+        |> String.fromInt
+        |> String.uncons
+        |> Maybe.map Tuple.first
 
 
 applyWeight : Int -> Int -> Int
