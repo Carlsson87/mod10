@@ -2,7 +2,7 @@
     "type": "package",
     "name": "carlsson87/mod10",
     "summary": "Calculate and Validate number sequences according to the Modulus 10 algorithm",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "version": "1.0.0",
     "exposed-modules": [
         "Mod10"
